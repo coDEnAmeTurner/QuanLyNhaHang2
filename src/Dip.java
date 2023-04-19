@@ -1,0 +1,3 @@
+public enum Dip {
+    NAM_MOI, GIAI_PHONG, QUOC_TE_LAO_DONG, TETAMLICH
+}
