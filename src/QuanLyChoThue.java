@@ -14,11 +14,12 @@ public class QuanLyChoThue {
     }
 
     public void hienThi(){
-        System.out.printf("%-20s%-20s%-20s%-20s", "Mã buổi tiệc", "Tên buổi tiệc", "Sảnh thuê","Ngày thu","Thời đểm");
+        System.out.printf("%-20s%-20s%-20s%-20s%-20s%-20s%-20s%-20s", "Mã buổi tiệc", "Tên buổi tiệc", "Mã sảnh",
+                "Tên sảnh", "Vị trí sảnh", "Sức chứa", "Ngày thuê","Buổi thuê");
         this.getDsChoThue().forEach(sanh -> sanh.hienThi());
     }
     public List<SanhCuoi> traCuuSanh (int nam) {
-        return getDsChoThue().stream().filter(choThue -> choThue.getNgayThue().getYear() == nam).map(ChoThueSanh::getSanhThue).toList();
+        return getDsChoThue().stream().filter(choThue -> choThue.getThoiDiemThue().getNgayThue().getYear() == nam).map(ChoThueSanh::getSanhThue).toList();
     }
     public ChoThueSanh traCuuTiec(String id){
         return this.dsChoThue.stream().filter(tiec -> tiec.getMaBuoiTiec().equals(id)).findFirst().get();

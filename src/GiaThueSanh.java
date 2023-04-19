@@ -1,4 +1,8 @@
 public class GiaThueSanh {
+
+    private static int dem = 0;
+
+    private int ma = ++dem;
     private double gia;
     private ThoiDiemThue thoiDiem;
 
@@ -20,7 +24,20 @@ public class GiaThueSanh {
         return thoiDiem;
     }
 
+    public void hienThi(){
+        this.thoiDiem.hienThi();
+        System.out.printf("%-20s%-20s",this.ma, this.gia);
+    }
+
     public void setThoiDiem(ThoiDiemThue thoiDiem) {
         this.thoiDiem = thoiDiem;
+    }
+
+    public int getMa() {
+        return ma;
+    }
+
+    public void setMa(int ma) {
+        this.ma = ma;
     }
 }

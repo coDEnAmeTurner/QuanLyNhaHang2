@@ -3,6 +3,7 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class QuanLyMenu {
     private List<MenuBuoiTiec> dsMenu = new ArrayList<>();
@@ -16,6 +17,12 @@ public class QuanLyMenu {
     }
 
     public MenuBuoiTiec traCuuMenu(int ma) {
-        return dsMenu.stream().filter(menu -> menu.getMaMenu() == ma).findFirst().get();
+        try{
+            return dsMenu.stream().filter(menu -> menu.getMaMenu() == ma).findFirst().get();
+        }
+        catch (NoSuchElementException ex){
+            System.out.print("Lỗi không tìm thấy menu !!!");
+        }
+        return null;
     }
 }

@@ -15,8 +15,8 @@ public class ChoThueSanh {
         setMaBuoiTiec(String.format("ChoThue%03d",++dem));
     }
     private GiaThueSanh timGiaThue() {
-        Class classThoiDiemThue = thoiDiemThue.getClass();
-        return sanhThue.getDsGiaThue().stream().filter(gia -> classThoiDiemThue.isInstance(gia)).findFirst().get();
+//        Class classThoiDiemThue = thoiDiemThue.getClass();
+        return this.sanhThue.getDsGiaThue().stream().filter(gia -> gia.getThoiDiem().equals(this.thoiDiemThue)).findFirst().get();
     }
 
     public ChoThueSanh(String tenBuoiTiec, SanhCuoi sanhThue, ThoiDiemThue thoiDiemThue,
@@ -27,6 +27,16 @@ public class ChoThueSanh {
         this.giaThueSanh = timGiaThue();
         this.listMenu = listMenu;
         this.listDV = listDV;
+    }
+
+    public ChoThueSanh(String tenBuoiTiec, SanhCuoi sanhThue, ThoiDiemThue thoiDiemThue,
+                       MenuBuoiTiec[] listMenu, DichVu... listDV) {
+        this.tenBuoiTiec = tenBuoiTiec;
+        this.sanhThue = sanhThue;
+        this.thoiDiemThue = thoiDiemThue;
+        this.giaThueSanh = timGiaThue();
+        this.listMenu = Arrays.asList(listMenu);
+        this.listDV = Arrays.asList(listDV);
     }
 
     public void themMenu(MenuBuoiTiec... menus) {
@@ -45,12 +55,9 @@ public class ChoThueSanh {
         return this.giaDV;
     }
     public void hienThi(){
-//        System.out.printf("Mã buổi tiệc: %s",this.maBuoiTiec);
-//        System.out.printf("\nTên buổi tiệc: %s",this.tenBuoiTiec);
-//        System.out.printf("\nSảnh thuê: %s",this.sanhThue.getMaSanh());
-//        System.out.printf("\nNgày thuê: %s",CauHinh.f.format(this.giaThueSanh));
-//        System.out.printf("\nThời điểm thuê: ",this.thoiDiemThue);
-        System.out.printf("\n%-20s%-20s%-20s%-20s", this.getMaBuoiTiec(), this.tenBuoiTiec, this.sanhThue.getMaSanh(), CauHinh.f.format(this.giaThueSanh), this.thoiDiemThue);
+        System.out.printf("\n%-20s%-20s", this.getMaBuoiTiec(), this.tenBuoiTiec);
+        sanhThue.hienThiChoThue();
+        thoiDiemThue.hienThiChoThue();
     }
 
     public String getTenBuoiTiec() {
@@ -115,5 +122,13 @@ public class ChoThueSanh {
 
     public void setMaBuoiTiec(String maBuoiTiec) {
         this.maBuoiTiec = maBuoiTiec;
+    }
+
+    public GiaThueSanh getGiaThueSanh() {
+        return giaThueSanh;
+    }
+
+    public void setGiaThueSanh(GiaThueSanh giaThueSanh) {
+        this.giaThueSanh = giaThueSanh;
     }
 }

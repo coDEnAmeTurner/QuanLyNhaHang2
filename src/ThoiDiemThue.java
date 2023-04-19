@@ -9,6 +9,18 @@ public class ThoiDiemThue {
         this.buoiThue = buoiThue;
     }
 
+    public void hienThi(){
+        System.out.printf("\n%-20s%-20s",CauHinh.f.format(this.ngayThue),this.buoiThue);
+    }
+
+    public void hienThiChoThue(){
+        System.out.printf("%-20s%-20s",CauHinh.f.format(this.ngayThue),this.buoiThue);
+    }
+    @Override
+    public boolean equals(Object obj) {
+        ThoiDiemThue temp = (ThoiDiemThue) obj;
+        return temp.ngayThue.equals(this.ngayThue) && this.buoiThue == temp.buoiThue;
+    }
     public Date getNgayThue() {
         return ngayThue;
     }
@@ -24,4 +36,5 @@ public class ThoiDiemThue {
     public void setBuoiThue(BuoiThue buoiThue) {
         this.buoiThue = buoiThue;
     }
+
 }

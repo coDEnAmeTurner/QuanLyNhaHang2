@@ -1,15 +1,25 @@
-
-
 import java.text.ParseException;
 import java.util.*;
 
 
 public class Demo {
     public static void main(String[] args) throws ParseException {
+        //thời điểm có sẵn
+        var td1 = new ThoiDiemThue(CauHinh.f.parse("20/12/2023"), BuoiThue.CHIEU);
+        var td2 = new ThoiDiemThue(CauHinh.f.parse("12/11/2023"), BuoiThue.SANG);
+        var td3 = new ThoiDiemThue(CauHinh.f.parse("8/2/2023"), BuoiThue.SANG);
+        var td4 = new ThoiDiemThue(CauHinh.f.parse("1/11/2022"), BuoiThue.TOI);
+
+        //giá thuê sảnh có sẵn
+        var gt1 = new GiaThueSanh(200, td1);
+        var gt2 = new GiaThueSanh(100, td2);
+        var gt3 = new GiaThueSanh(300, td3);
+        var gt4 = new GiaThueSanh(500, td4);
+
         //sảnh cưới có sẵn
-        SanhCuoi s1 = new SanhCuoi("Diamonds",ViTriSanh.TANG_1,50);
-        SanhCuoi s2 = new SanhCuoi("Golden", ViTriSanh.TANG_1,40);
-        SanhCuoi s3 = new SanhCuoi("Silver",ViTriSanh.TANG_2,30);
+        SanhCuoi s1 = new SanhCuoi("Diamonds",ViTriSanh.TANG_1,50, gt1, gt2);
+        SanhCuoi s2 = new SanhCuoi("Golden", ViTriSanh.TANG_1,40, gt1, gt3, gt4);
+        SanhCuoi s3 = new SanhCuoi("Silver",ViTriSanh.TANG_2,30, gt2, gt4);
 
         //thức ăn , thức uống
         DoAnUong ta0 = new ThucAn("Súp cua",50,false);
@@ -31,6 +41,10 @@ public class Demo {
         MenuBuoiTiec menu1 = new MenuBuoiTiec(ta0,ta1,ta2,ta4,tu1,tu2);
         MenuBuoiTiec menu2 = new MenuBuoiTiec(ta0,ta2,ta4,ta5,tu2,tu3);
 
+        //cho thuê sảnh obj có sẵn
+        var ct1 = new ChoThueSanh("abc", s1, td1, new MenuBuoiTiec[]{menu1}, dv2);
+        var ct2 = new ChoThueSanh("xyz", s2, td3, new MenuBuoiTiec[]{menu2}, dv3);
+
         QuanLySanhCuoi qlySanhCuoi = new QuanLySanhCuoi();
         QuanLyDichVu qlyDichVu = new QuanLyDichVu();
         QuanLyAnUong qlyAnUong = new QuanLyAnUong();
@@ -43,12 +57,8 @@ public class Demo {
         qlyAnUong.themDoAnUong(ta0,ta1,ta2,ta3,ta4,ta5,tu1,tu2,tu3);
         qlyMenu.themMenu(menu1,menu2);
         qlyDichVu.themDVu(dv1,dv2,dv3);
-        qlGiaThue.themGiaThue(
-                new GiaThueSanh(200, new ThoiDiemThue(CauHinh.f.parse("20-12-23"), BuoiThue.CHIEU)),
-                new GiaThueSanh(100, new ThoiDiemThue(CauHinh.f.parse("12-11-23"), BuoiThue.SANG)),
-                new GiaThueSanh(300, new ThoiDiemThue(CauHinh.f.parse("8-2-23"), BuoiThue.SANG)),
-                new GiaThueSanh(500, new ThoiDiemThue(CauHinh.f.parse("1-11-22"), BuoiThue.TOI))
-                );
+        qlGiaThue.themGiaThue(gt1, gt2, gt3, gt4);
+        qlyChoThue.themChoThue(ct1, ct2);
 
         int choose = 0;
         do{
@@ -58,9 +68,9 @@ public class Demo {
             System.out.println("3. Quản lý thông tin thức ăn, thức uống");
             System.out.println("4. Quản lý cho thuê sảnh");
             System.out.println("5. Quản lý giá thuê sảnh");
-            System.out.println("5. Quản lý menu");
-            System.out.println("6. Xuất hóa đơn");
-            System.out.println("7. Báo cáo doanh thu");
+            System.out.println("6. Quản lý menu");
+            System.out.println("7. Xuất hóa đơn");
+            System.out.println("8. Báo cáo doanh thu");
             System.out.println("0. Thoát");
             System.out.println("==========================================");
             do {
@@ -108,7 +118,36 @@ public class Demo {
                                         ViTriSanh tang = ViTriSanh.values()[Integer.parseInt(CauHinh.sc.nextLine())-1];
                                         System.out.print("Nhập vào sức chứa: ");
                                         int sucChua = Integer.parseInt(CauHinh.sc.nextLine());
-                                        qlySanhCuoi.themSanh(new SanhCuoi(ten, tang, sucChua));
+                                        qlGiaThue.hienThi();
+                                        List<Integer> dsMaGia = new ArrayList<>();
+                                        int maGia; boolean thoat = false;
+                                        do {
+                                            do {
+                                                try {
+                                                    System.out.print("\nNhập mã giá thuê của sảnh: ");
+                                                    maGia = Integer.parseInt(CauHinh.sc.nextLine());
+                                                    break;
+                                                } catch (NumberFormatException ex) {
+                                                    System.out.println("Lỗi nhập chữ");
+                                                }
+                                            } while (true);
+                                            if (qlGiaThue.traCuuTheoMa(maGia) != null && !dsMaGia.contains(maGia)) {
+                                                dsMaGia.add(maGia);
+                                                do {
+                                                    try {
+                                                        System.out.print("Nhập thêm giá cho buổi tiệc? (0-Không / 1-Có): ");
+                                                        thoat = Boolean.parseBoolean(Integer.parseInt(CauHinh.sc.nextLine()) == 0 ? "True" : "False");
+                                                        break;
+                                                    } catch (NumberFormatException ex) {
+                                                        System.out.println("Lỗi nhập chữ");
+                                                    }
+                                                } while (true);
+                                            }
+                                            else {
+                                                System.out.println("Lỗi nhập mã, kiểm tra lại");
+                                            }
+                                        }while(!thoat);
+                                        qlySanhCuoi.themSanh(new SanhCuoi(ten, tang, sucChua, dsMaGia.stream().map(ma -> qlGiaThue.traCuuTheoMa(ma)).toList()));
                                         break;
                                     }
                                     catch (NumberFormatException ex){
@@ -533,6 +572,7 @@ public class Demo {
                     int choose4;
                     do{
                         System.out.println("\n\n1. Cho thuê sảnh");
+                        System.out.println("2. Hiển thị danh sách cho thuê");
                         System.out.println("0. Thoát");
                         do{
                             try{
@@ -557,22 +597,12 @@ public class Demo {
                                         System.out.print("\nNhập mã sảnh cần thuê: ");
                                         sanh = qlySanhCuoi.traCuuSanhTheoMa(CauHinh.sc.nextLine().toUpperCase().trim());
                                     }while(sanh == null);
-                                    double donGiaThue;
+                                    sanh.hienThiDSGiaThue();
+                                    BuoiThue buoi;
                                     do{
                                         try{
-                                            System.out.print("Nhập đơn giá thuê sảnh: ");
-                                            donGiaThue = Double.parseDouble(CauHinh.sc.nextLine());
-                                            break;
-                                        }
-                                        catch(NumberFormatException ex){
-                                            System.out.println("Lỗi nhập chữ");
-                                        }
-                                    }while(true);
-                                    BuoiThue thoiDiem;
-                                    do{
-                                        try{
-                                            System.out.print("Nhập thời điểm thuê (1-Sáng, 2-Chiều, 3-Tối): ");
-                                            thoiDiem = BuoiThue.values()[Integer.parseInt(CauHinh.sc.nextLine()) - 1];
+                                            System.out.print("\nNhập buổi thuê (1-Sáng, 2-Chiều, 3-Tối): ");
+                                            buoi = BuoiThue.values()[Integer.parseInt(CauHinh.sc.nextLine()) - 1];
                                             break;
                                         }
                                         catch(NumberFormatException ex){
@@ -585,7 +615,7 @@ public class Demo {
                                     Date ngayThue;
                                     do{
                                         try{
-                                            System.out.print("Nhập ngày thuê (dd/MM/yyyy): ");
+                                            System.out.print("\nNhập ngày thuê (dd/MM/yyyy): ");
                                             ngayThue = CauHinh.f.parse(CauHinh.sc.nextLine());
                                             break;
                                         }
@@ -593,15 +623,24 @@ public class Demo {
                                             System.out.println("Lỗi nhập chữ");
                                         }
                                     }while(true);
+                                    ThoiDiemThue thoiDiem = new ThoiDiemThue(ngayThue , buoi);
                                     qlyMenu.hienThi();
-                                    List<Integer> ma = new ArrayList<>();
+                                    List<Integer> maMenu = new ArrayList<>(); // để nhận nhiều menu
                                     Boolean thoatTrong = false;
+                                    int tempMa;
                                     do {
-                                        System.out.print("Nhập mã menu cần đặt chỉ nhập số: ");
-                                        int tempMa = Integer.parseInt(CauHinh.sc.nextLine());
+                                        do{
+                                            try{
+                                                System.out.print("Nhập mã menu cần đặt chỉ nhập số: ");
+                                                tempMa = Integer.parseInt(CauHinh.sc.nextLine());
+                                                break;
+                                            }catch(NumberFormatException ex){
+                                                System.out.println("Lỗi nhập");
+                                            }
+                                        }while(true);
                                         var menu = qlyMenu.traCuuMenu(tempMa);
-                                        if (menu != null) {
-                                            ma.add(tempMa);
+                                        if (menu != null && !maMenu.contains(tempMa)) { //nếu mã menu không tìm thấy trong danh sách menu đã chọn và có ds menu hệ thống
+                                            maMenu.add(tempMa);
                                             do {
                                                 try {
                                                     System.out.print("Đặt thêm menu cho buổi tiệc? (0-Không / 1-Có): ");
@@ -613,21 +652,20 @@ public class Demo {
                                             }while(true);
                                         }
                                         else {
-                                            System.out.println("Không có mã này!");
+                                            System.out.println("Lỗi! Vui lòng kiểm tra lại");
                                             thoatTrong = false;
-
                                         }
                                     } while (!thoatTrong);
-                                    var dsMenu = ma.stream().map(qlyMenu::traCuuMenu).toList();
+                                    var dsMenu = maMenu.stream().map(qlyMenu::traCuuMenu).toList();
                                     CauHinh.hienTieuDeDichVu();
                                     qlyDichVu.hienThi();
-                                    List<String> ma2 = new ArrayList<>();
+                                    List<String> maDv = new ArrayList<>();
                                     do {
                                         System.out.print("Nhập mã dịch vụ cần đặt: ");
-                                        var tempMa = CauHinh.sc.nextLine();
-                                        var dv = qlyDichVu.traCuuTheoMa(tempMa);
-                                        if (dv != null) {
-                                            ma2.add(tempMa);
+                                        var tempMaDv = CauHinh.sc.nextLine();
+                                        var dv = qlyDichVu.traCuuTheoMa(tempMaDv);
+                                        if (dv != null && !maDv.contains(tempMaDv)) {
+                                            maDv.add(tempMaDv);
                                             do {
                                                 try {
                                                     System.out.print("Đặt thêm dịch vụ cho buổi tiệc? (0-Không / 1-Có): ");
@@ -639,13 +677,13 @@ public class Demo {
                                             }while(true);
                                         }
                                         else {
-                                            System.out.println("Không có mã này!");
+                                            System.out.println("Lỗi!!!");
                                             thoatTrong = false;
 
                                         }
                                     } while (!thoatTrong);
-                                    var dsDV = ma2.stream().map(qlyDichVu::traCuuTheoMa).toList();
-                                    qlyChoThue.themChoThue(new ChoThueSanh(tenTiec, sanh, donGiaThue, thoiDiem, ngayThue, dsMenu, dsDV));
+                                    var dsDV = maDv.stream().map(qlyDichVu::traCuuTheoMa).toList();
+                                    qlyChoThue.themChoThue(new ChoThueSanh(tenTiec, sanh, thoiDiem,dsMenu, dsDV));
                                     do{
                                         try{
                                             System.out.print("Nhập tiếp việc cho thuê? (0-Không / 1-Có): ");
@@ -657,6 +695,10 @@ public class Demo {
                                         }
                                     }while(true);
                                 } while (!thoat);
+                                break;
+                            }
+                            case 2: {
+                                qlyChoThue.hienThi();
                                 break;
                             }
                             case 0:
