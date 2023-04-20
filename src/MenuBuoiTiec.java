@@ -18,6 +18,15 @@ public class MenuBuoiTiec {
     public double tinhGia() {
         return dsDoAnUong.stream().map(dau -> dau.getGia()).reduce(Double.valueOf(0.0), (sum, gia) -> sum += gia);
     }
+
+    public void themDoAnUong(DoAnUong... doAnUongs) {
+        dsDoAnUong.addAll(Arrays.asList(doAnUongs));
+    }
+
+    public void xoaDoAnUong(int ma) {
+        dsDoAnUong.removeIf(doAnUong -> doAnUong.getMaAnUong() == ma);
+    }
+
     public void hienThi(){
         System.out.printf("============================================ %s ============================================\n", "MENU " + maMenu);
         CauHinh.hienTieuDeDoAnUong();

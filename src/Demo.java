@@ -67,8 +67,8 @@ public class Demo {
             System.out.println("2. Quản lý thông tin dịch vụ");
             System.out.println("3. Quản lý thông tin thức ăn, thức uống");
             System.out.println("4. Quản lý cho thuê sảnh");
-            System.out.println("5. Quản lý giá thuê sảnh");
-            System.out.println("6. Quản lý menu");
+            System.out.println("5. Quản lý menu");
+            System.out.println("6. Quản lý giá thuê");
             System.out.println("7. Xuất hóa đơn");
             System.out.println("8. Báo cáo doanh thu");
             System.out.println("0. Thoát");
@@ -591,15 +591,18 @@ public class Demo {
                                     System.out.println("================= Nhập thông tin cho thuê =================");
                                     System.out.print("Nhập tên bữa tiệc: ");
                                     String tenTiec = CauHinh.sc.nextLine();
+                                    System.out.println("================ DS Sảnh trong hệ thống ================");
                                     qlySanhCuoi.hienThi();
                                     SanhCuoi sanh;
                                     do {
                                         System.out.print("\nNhập mã sảnh cần thuê: ");
                                         sanh = qlySanhCuoi.traCuuSanhTheoMa(CauHinh.sc.nextLine().toUpperCase().trim());
                                     }while(sanh == null);
+
+                                    System.out.println("================ DS giá thuê của sảnh cần thuê ================");
                                     sanh.hienThiDSGiaThue();
                                     BuoiThue buoi;
-                                    do{
+                                    do{`
                                         try{
                                             System.out.print("\nNhập buổi thuê (1-Sáng, 2-Chiều, 3-Tối): ");
                                             buoi = BuoiThue.values()[Integer.parseInt(CauHinh.sc.nextLine()) - 1];
@@ -717,27 +720,124 @@ public class Demo {
                     System.out.print("3. Xóa menu");
                     System.out.print("4. Hiển thị danh sách menu");
                     System.out.print("0. Thoát");
-
-                    boolean thoat = false;
+                    int chon;
                     do {
-                        System.out.println("Nhập menu mới: ");
-                        boolean thoatTrong = false;
-                        List<Integer> dsMaAnUong = new ArrayList<>();
-                        qlyAnUong.hienThi();
                         do {
-                            System.out.print("Nhập mã đồ ăn (uống) trong menu");
-                            dsMaAnUong.add(Integer.parseInt(CauHinh.sc.nextLine()));
-                            System.out.println("Nhập tiếp đồ ăn uống? (0-1): ");
-                            thoatTrong = Boolean.parseBoolean(CauHinh.sc.nextLine());
-                        } while (!thoatTrong);
-                        MenuBuoiTiec menu = new MenuBuoiTiec(dsMaAnUong.stream().map(ma -> qlyAnUong.traCuuAnUong(ma)).toList());
-                        qlyMenu.themMenu(menu);
-                        System.out.println("Nhập tiếp menu? (0-1): ");
-                        thoat = Boolean.parseBoolean(CauHinh.sc.nextLine());
-                    } while (!thoat);
+                            try {
+                                System.out.print("Chọn: ");
+                                chon = Integer.parseInt(CauHinh.sc.nextLine());
+                                break;
+                            } catch (NumberFormatException ex) {
+                                System.out.println("Lỗi nhập chữ");
+                            }
+                        } while (true);
+                        switch (chon) {
+                            case 1: {
+                                boolean thoat = false;
+                                do {
+                                    System.out.println("=========== Nhập menu mới ===========");
+                                    boolean thoatTrong = false;
+                                    List<Integer> dsMaAnUong = new ArrayList<>();
+                                    qlyAnUong.hienThi();
+                                    do {
+                                        do {
+                                            try {
+                                                System.out.print("Nhập mã đồ ăn (uống) trong menu");
+                                                dsMaAnUong.add(Integer.parseInt(CauHinh.sc.nextLine()));
+                                                break;
+                                            } catch (NumberFormatException ex) {
+                                                System.out.println("Lỗi nhập chữ");
+                                            }
+                                        } while (true);
+                                        do {
+                                            try {
+                                                System.out.println("Nhập tiếp đồ ăn uống? (0-1): ");
+                                                thoatTrong = Boolean.parseBoolean(Integer.parseInt(CauHinh.sc.nextLine()) == 0 ? "True" : "False");
+                                                break;
+                                            } catch (NumberFormatException ex) {
+                                                System.out.println("Lỗi nhập chữ");
+                                            }
+                                        } while (true);
+                                    } while (!thoatTrong);
+                                    MenuBuoiTiec menu = new MenuBuoiTiec(dsMaAnUong.stream().map(ma -> qlyAnUong.traCuuAnUong(ma)).toList());
+                                    qlyMenu.themMenu(menu);
+                                    do {
+                                        try {
+                                            System.out.println("Nhập tiếp menu? (0-1): ");
+                                            thoat = Boolean.parseBoolean(Integer.parseInt(CauHinh.sc.nextLine()) == 0 ? "True" : "False");
+                                            break;
+                                        } catch (NumberFormatException ex) {
+                                            System.out.println("Lỗi nhập chữ");
+                                        }
+                                    } while (true);
+                                } while (!thoat);
+                                break;
+                            }
+                            case 2: {
+                                System.out.println("============ Các memnu trong hệ thống ============");
+                                qlyMenu.hienThi();
+                                System.out.print("Nhập mã menu cần sửa: ");
+                                int maMenuSua = Integer.parseInt(CauHinh.sc.nextLine());
+                                var menuSua = qlyMenu.traCuuMenu(maMenuSua);
+                                do {
+                                    System.out.println("1. Xóa đồ an uống");
+                                    System.out.println("2. Thêm đồ ăn uống");
+                                    System.out.println("0. Thoát");
+                                    System.out.print("Chọn: ");
+                                    chon = Integer.parseInt(CauHinh.sc.nextLine());
+                                    int maSua;
+                                    switch (chon) {
+                                        case 1: {
+                                            System.out.println("============ Menu cần sửa ============");
+                                            menuSua.hienThi();
+                                            System.out.print("Nhập mã đồ ăn uống để xóa: ");
+                                            maSua = Integer.parseInt(CauHinh.sc.nextLine());
+                                            menuSua.xoaDoAnUong(maSua);
+                                            break;
+                                        }
+                                        case 2: {
+                                            System.out.println("============ Menu cần sửa ============");
+                                            menuSua.hienThi();
+                                            System.out.println("=========== Danh sách đồ ăn uống trong hệ thống ===========");
+                                            qlyAnUong.hienThi();
+                                            System.out.print("Nhập mã đồ ăn uống để thêm: ");
+                                            maSua = Integer.parseInt(CauHinh.sc.nextLine());
+                                            var dau = qlyAnUong.traCuuAnUong(maSua);
+                                            menuSua.themDoAnUong(dau);
+                                            break;
+                                        }
+                                        default:
+                                            System.out.println("Không có lựa chọn này!");
+                                            break;
+                                    }
+                                    break;
+                                } while (chon != 0);
+                                break;
+                            }
+                            case 3: {
+                                System.out.println("============ Các memnu trong hệ thống ============");
+                                qlyMenu.hienThi();
+                                System.out.print("Nhập mã menu cần xóa: ");
+                                int maMenuXoa = Integer.parseInt(CauHinh.sc.nextLine());
+                                qlyMenu.xoaMenu(maMenuXoa);
+                                break;
+                            }
+                            case 4: {
+                                System.out.println("============ Các memnu trong hệ thống ============");
+                                qlyMenu.hienThi();
+                                break;
+                            }
+                            case 0: {
+                                break;
+                            }
+                            default:
+                                System.out.println("Không có lựa chọn này!");
+                                break;
+                        }
+                    }while (chon != 0);
                     break;
                 }
-                case 6: {
+                case 7: {
                     qlyChoThue.hienThi();
                     System.out.print("Nhập mã buổi tiệc cần xuất hóa đơn: ");
                     String id = CauHinh.sc.nextLine();
@@ -746,7 +846,7 @@ public class Demo {
                     hd.xuatHoaDon();
                     break;
                 }
-                case 7: {
+                case 8: {
                     int choose7;
                     System.out.println("Kiểm tra doanh thu theo: ");
                     System.out.println("1. Theo tháng.");

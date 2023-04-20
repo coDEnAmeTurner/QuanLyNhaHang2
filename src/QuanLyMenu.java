@@ -25,4 +25,8 @@ public class QuanLyMenu {
         }
         return null;
     }
+
+    public void xoaMenu(int ma) {
+        dsMenu.removeIf(menu -> menu.getMaMenu() == ma);
+    }
 }
