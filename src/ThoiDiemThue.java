@@ -10,7 +10,11 @@ public class ThoiDiemThue {
     }
 
     public void hienThi(){
-        System.out.printf("\n%-20s%-20s",CauHinh.f.format(this.ngayThue),this.buoiThue);
+        System.out.printf("%-20s%-20s\n", CauHinh.f.format(this.ngayThue),this.buoiThue);
+    }
+
+    public void hienThiCachHang(){
+        System.out.printf("%-20s%-20s%-20s%-20s\n", "", "", CauHinh.f.format(this.ngayThue),this.buoiThue);
     }
 
     public void hienThiChoThue(){

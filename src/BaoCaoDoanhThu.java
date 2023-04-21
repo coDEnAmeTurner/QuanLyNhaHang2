@@ -11,17 +11,18 @@ public class BaoCaoDoanhThu {
     }
     public double theoThang(int thang, int nam) {
         List<HoaDon> listFilter = this.dsHoaDon.stream().filter(hoaDon ->
-                hoaDon.getBuaTiec().getThoiDiemThue().getNgayThue().getMonth() == thang && hoaDon.getBuaTiec().getThoiDiemThue().getNgayThue().getYear() == nam
+                hoaDon.getBuaTiec().getThoiDiemThue().getNgayThue().getMonth() == (thang - 1) && hoaDon.getBuaTiec().getThoiDiemThue().getNgayThue().getYear() == nam - 1900
         ).collect(Collectors.toList());
         return listFilter.stream().mapToDouble(HoaDon::tinhTongTien).sum();
     }
     public double theoQuy(int quy, int nam){
         Calendar calendar = Calendar.getInstance();
         List<HoaDon> listFilter = this.dsHoaDon.stream().filter(hoaDon -> {
-            calendar.setTime(hoaDon.getBuaTiec().getThoiDiemThue().getNgayThue());
-            int quater = (calendar.get(Calendar.MONTH)/3)+1;
-            return ((quater == quy) && calendar.get(Calendar.YEAR) == nam);
-        }).collect(Collectors.toList());
+            var ngayHoaDon = hoaDon.getBuaTiec().getThoiDiemThue().getNgayThue();
+            if ((Math.ceil((ngayHoaDon.getMonth() + 1) / 3.0f) == quy && ngayHoaDon.getYear() == (nam - 1900)))
+                return true;
+            return false;
+                }).collect(Collectors.toList());
         return listFilter.stream().mapToDouble(HoaDon::tinhTongTien).sum();
     }
 

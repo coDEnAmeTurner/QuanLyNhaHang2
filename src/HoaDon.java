@@ -4,6 +4,7 @@ public class HoaDon {
     private String maHoaDon;
     private double tongTien;
     private ChoThueSanh buaTiec;
+
     {
         maHoaDon = String.format("HD%03d",++dem);
     }
@@ -15,19 +16,21 @@ public class HoaDon {
         return this.buaTiec.getGiaThueSanh().getGia() + this.buaTiec.tinhGiaDVu() + this.buaTiec.tinhGiaMenu();
     }
     public void xuatHoaDon(){
-        System.out.printf("+%-60s+");
-        System.out.printf("|%s:%s|","Mã hóa đơn:",this.maHoaDon);
-        System.out.printf("|%s:%s|","Mã sãnh thuê",this.buaTiec.getSanhThue().getMaSanh());
-        System.out.printf("|%s:%s|","Tên sãnh thuê",this.buaTiec.getSanhThue().getTenSanh());
-        System.out.printf("|Ngày thuê:%s|",CauHinh.f.format(this.buaTiec.getThoiDiemThue().getNgayThue()));
-        System.out.printf("%-20s%-20s%-20s","Loại","Tên loại","Đơn giá");
+        System.out.println("************** HOÁ ĐƠN **************");
+        System.out.printf("|%s: %s|\n","Mã hóa đơn",this.maHoaDon);
+        System.out.printf("|%s: %s|\n","Mã sãnh thuê",this.buaTiec.getSanhThue().getMaSanh());
+        System.out.printf("|%s: %s|\n","Tên sãnh thuê",this.buaTiec.getSanhThue().getTenSanh());
+        System.out.printf("|Ngày thuê: %s|\n",CauHinh.f.format(this.buaTiec.getThoiDiemThue().getNgayThue()));
+        System.out.printf("%-20s%-20s%-20s\n","Mã","Tên","Đơn giá");
         this.buaTiec.getListMenu().forEach(item ->{
-            System.out.printf("%-20s%-20s%-20s",item.getMaMenu(),"Menu" + item.getMaMenu(),item.tinhGia());
+            System.out.printf("%-20s%-20s%-20s\n",item.getMaMenu(),"Menu" + item.getMaMenu(),item.tinhGia());
         });
         this.buaTiec.getListDV().forEach(item -> {
-            System.out.printf("%-20s%-20s%-20s",item.getMaDV(),item.getTenDV(),item.getGiaDV());
+            System.out.printf("%-20s%-20s%-20s\n",item.getMaDV(),item.getTenDV(),item.getGiaDV());
         });
-        System.out.printf("Thành tiền: %f", this.tinhTongTien());
+        System.out.printf("Thành tiền: %-20.2f\n", this.tinhTongTien());
+        System.out.println("*************************************\n\n\n");
+
     }
 
     public double getTongTien() {

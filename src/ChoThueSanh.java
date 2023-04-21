@@ -16,7 +16,11 @@ public class ChoThueSanh {
     }
     private GiaThueSanh timGiaThue() {
 //        Class classThoiDiemThue = thoiDiemThue.getClass();
-        return this.sanhThue.getDsGiaThue().stream().filter(gia -> gia.getThoiDiem().equals(this.thoiDiemThue)).findFirst().get();
+        return this.sanhThue.getDsGiaThue().stream().filter(giaThue -> {
+            if (giaThue.getDsThoiDiem().contains(this.thoiDiemThue))
+                return true;
+            return false;
+        }).findFirst().get();
     }
 
     public ChoThueSanh(String tenBuoiTiec, SanhCuoi sanhThue, ThoiDiemThue thoiDiemThue,

@@ -14,7 +14,8 @@ public class CauHinh {
         System.out.printf("%-20s%-20s","Ngày thuê","Buổi thuê");
     }
     public static final void hienTieuDeGiaThue(){
-        CauHinh.hienTieuDeThoiDiemThue();
         System.out.printf("%-20s%-20s","Mã giá thuê", "Giá thuê");
+        CauHinh.hienTieuDeThoiDiemThue();
+        System.out.println();
     }
 }

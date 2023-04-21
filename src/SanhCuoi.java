@@ -6,7 +6,6 @@ public class SanhCuoi {
     private String tenSanh;
     private ViTriSanh viTriSanh;
     private int sucChua;
-
     private List<GiaThueSanh> dsGiaThue;
     private static int dem = 0;
     {

@@ -1,12 +1,13 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 public class QuanLyGiaThue {
-    private List<GiaThueSanh> dsGiaThue;
+    private List<GiaThueSanh> dsGiaThue = new ArrayList<>();
 
     public void themGiaThue(GiaThueSanh... dsGiaThue) {
-        this.dsGiaThue = Arrays.asList(dsGiaThue);
+        this.dsGiaThue.addAll(Arrays.asList(dsGiaThue));
     }
 
     public GiaThueSanh traCuuTheoMa(int ma) {
