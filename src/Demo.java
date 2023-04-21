@@ -763,11 +763,11 @@ public class Demo {
                     // thiếu chức năng hiển thị menu, sửa menu, xóa menu
                     int chon;
                     do {
-                        System.out.print("1. Thêm menu mới");
-                        System.out.print("2. Sửa menu");
-                        System.out.print("3. Xóa menu");
-                        System.out.print("4. Hiển thị danh sách menu");
-                        System.out.print("0. Thoát");
+                        System.out.println("1. Thêm menu mới");
+                        System.out.println("2. Sửa menu");
+                        System.out.println("3. Xóa menu");
+                        System.out.println("4. Hiển thị danh sách menu");
+                        System.out.println("0. Thoát");
                         do {
                             try {
                                 System.out.print("Chọn: ");
@@ -789,20 +789,20 @@ public class Demo {
                                     do {
                                         do {
                                             try {
-                                                System.out.print("Nhập mã đồ ăn (uống) trong menu");
+                                                System.out.print("Nhập mã đồ ăn (uống) trong menu: ");
                                                 dsMaAnUong.add(Integer.parseInt(CauHinh.sc.nextLine()));
                                                 break;
                                             } catch (NumberFormatException ex) {
-                                                System.out.println("Lỗi nhập chữ");
+                                                System.out.print("\nLỗi nhập chữ");
                                             }
                                         } while (true);
                                         do {
                                             try {
-                                                System.out.println("Nhập tiếp đồ ăn uống? (0-1): ");
+                                                System.out.print("Nhập tiếp đồ ăn uống? (0-Không / 1-Có): ");
                                                 thoatTrong = Boolean.parseBoolean(Integer.parseInt(CauHinh.sc.nextLine()) == 0 ? "True" : "False");
                                                 break;
                                             } catch (NumberFormatException ex) {
-                                                System.out.println("Lỗi nhập chữ");
+                                                System.out.print("\nLỗi nhập chữ");
                                             }
                                         } while (true);
                                     } while (!thoatTrong);
@@ -810,7 +810,7 @@ public class Demo {
                                     qlyMenu.themMenu(menu);
                                     do {
                                         try {
-                                            System.out.println("Nhập tiếp menu? (0-1): ");
+                                            System.out.print("Nhập tiếp menu mới (0-Không / 1-Có): ");
                                             thoat = Boolean.parseBoolean(Integer.parseInt(CauHinh.sc.nextLine()) == 0 ? "True" : "False");
                                             break;
                                         } catch (NumberFormatException ex) {
@@ -953,7 +953,7 @@ public class Demo {
                                 }while(month < 1 || month > 12);
                                 System.out.print("Nhập vào năm: ");
                                 year = Integer.parseInt(CauHinh.sc.nextLine());
-                                System.out.printf("\nDoah thu theo tháng: %20.2f\n",baoCao.theoThang(month,year));
+                                System.out.printf("\nDoanh thu theo tháng: %20.2f\n",baoCao.theoThang(month,year));
                                 break;
                             }
                             case 2:
@@ -967,9 +967,11 @@ public class Demo {
                                 }while(quater < 1 || quater > 12);
                                 System.out.print("Nhập vào năm: ");
                                 year = Integer.parseInt(CauHinh.sc.nextLine());
-                                System.out.printf("\nDoah thu theo quý: %20f\n",baoCao.theoQuy(quater,year));
+                                System.out.printf("\nDoah thu theo quý: %20.2f\n",baoCao.theoQuy(quater,year));
                                 break;
                             }
+                            case 0:
+                                break;
                             default:
                                 System.out.print("Lỗi.Vui lòng chọn lại!!!\n");
                                 break;

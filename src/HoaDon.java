@@ -22,6 +22,7 @@ public class HoaDon {
         System.out.printf("|%s: %s|\n","Tên sãnh thuê",this.buaTiec.getSanhThue().getTenSanh());
         System.out.printf("|Ngày thuê: %s|\n",CauHinh.f.format(this.buaTiec.getThoiDiemThue().getNgayThue()));
         System.out.printf("%-20s%-20s%-20s\n","Mã","Tên","Đơn giá");
+        System.out.printf("%-20s%-20s%-20.2f\n", this.buaTiec.getSanhThue().getMaSanh(), this.buaTiec.getSanhThue().getTenSanh(), this.buaTiec.getGiaThueSanh().getGia());
         this.buaTiec.getListMenu().forEach(item ->{
             System.out.printf("%-20s%-20s%-20s\n",item.getMaMenu(),"Menu" + item.getMaMenu(),item.tinhGia());
         });
