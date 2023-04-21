@@ -6,8 +6,8 @@ import java.util.stream.Collectors;
 
 public class QuanLySanhCuoi {
     private List<SanhCuoi> dsSanhCuoi = new ArrayList<>();
-
     private QuanLyChoThue quanLyChoThue;
+
     public void themSanh(SanhCuoi... sanhCuois) {
         dsSanhCuoi.addAll(Arrays.asList(sanhCuois));
     }
@@ -40,7 +40,7 @@ public class QuanLySanhCuoi {
     }
 
     public void sapXepTheoTanSoThue() {
-        dsSanhCuoi.sort((sanhA, sanhB) -> Math.toIntExact(quanLyChoThue.tinhTanSo(sanhA) - quanLyChoThue.tinhTanSo(sanhB)));
+        dsSanhCuoi.sort((sanhA, sanhB) -> - Math.toIntExact(quanLyChoThue.tinhTanSo(sanhA) - quanLyChoThue.tinhTanSo(sanhB)));
     }
 
     public void hienThi(){

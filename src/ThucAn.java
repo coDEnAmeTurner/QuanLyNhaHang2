@@ -9,10 +9,10 @@ public class ThucAn extends DoAnUong {
     @Override
     public void hienThi(){
         super.hienThi();
-        System.out.printf("%-20s\n", (isChay()) ? "Chay" : "Khong Chay");
+        System.out.printf("%-20s\n", (getIsChay()) ? "Chay" : "Khong Chay");
     }
 
-    public boolean isChay() {
+    public boolean getIsChay() {
         return isChay;
     }
 

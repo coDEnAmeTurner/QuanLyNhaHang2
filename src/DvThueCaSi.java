@@ -1,7 +1,7 @@
-public class DvThueCaSi extends DichVu{
+public class  DvThueCaSi extends DichVu{
     private String tenCaSi;
     private int soBaiHat;
-    public DvThueCaSi(String ten,double gia, String tenCaSi, int soLuongBaiHat){
+    public DvThueCaSi(String ten, double gia, String tenCaSi, int soLuongBaiHat){
         super(ten,gia);
         this.setTenCaSi(tenCaSi);
         this.setSoBaiHat(soLuongBaiHat);

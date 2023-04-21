@@ -10,7 +10,7 @@ public class QuanLyChoThue {
     }
 
     public long tinhTanSo(SanhCuoi sanhCuoi) {
-        return getDsChoThue().stream().filter(s -> s.equals(sanhCuoi)).count();
+        return getDsChoThue().stream().filter(s -> s.getSanhThue().equals(sanhCuoi)).count();
     }
 
     public void hienThi(){

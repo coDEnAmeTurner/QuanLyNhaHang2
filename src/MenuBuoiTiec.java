@@ -6,9 +6,11 @@ public class MenuBuoiTiec {
     private static int dem = 0;
     private int maMenu;
     private List<DoAnUong> dsDoAnUong = new ArrayList<>();
+
     {
         maMenu = ++dem;
     }
+
     public MenuBuoiTiec(DoAnUong... doAnUong) {
         this.dsDoAnUong.addAll(Arrays.asList(doAnUong));
     }

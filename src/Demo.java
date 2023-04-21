@@ -44,8 +44,6 @@ public class Demo {
         DoAnUong tu2 = new ThucUong("Coca-cola",10,"CoCa-cola");
         DoAnUong tu3 = new ThucUong("Sài gòn bạc", 10, "Sabeco");
 
-        //6   ×   ( 50   +   30   +   35   +   45   +   10   +   10 )   +   200   +   100   +   4   ×   400
-
         //dịch vụ
         DichVu dv1 = new DvKaraoke("KaraGold",100,30);
         DichVu dv2 = new DvThueCaSi("Thuê Ca Si", 500,"Sơn Tùng MTP", 5);
